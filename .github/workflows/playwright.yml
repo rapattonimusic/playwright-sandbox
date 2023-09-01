@@ -49,7 +49,7 @@ jobs:
         uses: nwtgck/actions-netlify@v2.0
         with:
           publish-dir: './playwright-report-publish'
-          production-branch: master
+          production-branch: playwright-reports
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: false
