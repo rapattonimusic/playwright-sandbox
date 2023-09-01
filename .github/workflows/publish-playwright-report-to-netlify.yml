@@ -16,7 +16,7 @@ jobs:
       - name: Publish Playwright Report to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './'
+          publish-dir: 'playwright-report-publish'
           production-branch: playwright-reports
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
