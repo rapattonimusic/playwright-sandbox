@@ -34,6 +34,8 @@ jobs:
         git add playwright-report-publish/
         git commit -m "Update Playwright reports"
         git push origin playwright-reports
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
     - uses: actions/upload-artifact@v3
       if: always()
       with:
@@ -53,7 +55,7 @@ jobs:
       - name: Publish Playwright Report to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './playwright-report-publish'
+          publish-dir: './'
           production-branch: playwright-reports
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
