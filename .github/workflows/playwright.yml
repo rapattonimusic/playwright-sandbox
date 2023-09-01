@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    outputs:
+      report-link: ${{ steps.set-report-link.outputs.report-link }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -21,6 +23,9 @@ jobs:
       run: npx playwright test
     - name: Copy Playwright Report to Publish Directory
       run: cp -R playwright-report/ playwright-report-publish/
+    - name: Set report link
+      id: set-report-link
+      run: echo "::set-output name=report-link::https://dazzling-axolotl-52126b.netlify.app"
     - name: Commit Playwright Report
       run: |
         git config --global user.name "GitHub Actions"
