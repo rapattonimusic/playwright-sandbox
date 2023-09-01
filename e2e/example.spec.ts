@@ -18,5 +18,9 @@ test('get started link', async ({ page }) => {
 });
 
 test('This test will fail', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  // Click the get started link.
+  await page.getByRole('link', { name: 'Get started' }).click();
   await expect('1').toBe('2');
 });
