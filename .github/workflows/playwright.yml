@@ -19,6 +19,16 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Copy Playwright Report to Publish Directory
+      run: cp -R playwright-report/ playwright-report-publish/
+    - name: Commit Playwright Report
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git checkout -b playwright-reports
+        git add playwright-report-publish/
+        git commit -m "Update Playwright reports"
+        git push origin playwright-reports
     - uses: actions/upload-artifact@v3
       if: always()
       with:
