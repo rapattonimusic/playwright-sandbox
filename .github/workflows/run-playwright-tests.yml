@@ -12,8 +12,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         ref: main
+    - name: Fast forward
+      run: git config pull.ff only
     - name: Perform git pull
-      run: git pull origin playwright-reports
+      run: git config pull.ff only origin playwright-reports
     - uses: actions/setup-node@v2
       with:
         node-version: 18
