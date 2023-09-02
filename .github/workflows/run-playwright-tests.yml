@@ -33,7 +33,7 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git checkout playwright-reports
+        git checkout playwright-reports $GITHUB_REF
         git add playwright-report-publish/
         git commit -m "Update Playwright reports"
         git push origin playwright-reports
