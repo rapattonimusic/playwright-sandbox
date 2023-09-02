@@ -24,10 +24,9 @@ jobs:
         set -e
         npx playwright test
     - name: Copy Playwright Report to Publish Directory
+      if: always()
       run: cp -R playwright-report/ playwright-report-publish/ || true
-    - name: Set report link
-      id: set-report-link
-      run: echo "::set-output name=report-link::https://dazzling-axolotl-52126b.netlify.app"
+    
     - name: Commit Playwright Report
       run: |
         git config --global user.name "GitHub Actions"
