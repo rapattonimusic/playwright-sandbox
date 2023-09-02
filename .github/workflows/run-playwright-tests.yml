@@ -10,12 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-      with:
-        ref: main
-    - name: Rebase
-      run: git rebase
+    # - name: Rebase
+    #   run: git rebase
     - name: Perform git pull
-      run: git pull origin playwright-reports
+      run: git pull origin main
     - uses: actions/setup-node@v2
       with:
         node-version: 18
