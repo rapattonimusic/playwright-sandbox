@@ -15,7 +15,7 @@ jobs:
     - name: Fast forward
       run: git config pull.ff only
     - name: Perform git pull
-      run: git config pull.ff only origin playwright-reports
+      run: git pull origin playwright-reports
     - uses: actions/setup-node@v2
       with:
         node-version: 18
