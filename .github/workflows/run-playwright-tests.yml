@@ -8,8 +8,6 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    outputs:
-      report-link: ${{ steps.set-report-link.outputs.report-link }}
     steps:
     - uses: actions/checkout@v3
     - name: Perform git pull
