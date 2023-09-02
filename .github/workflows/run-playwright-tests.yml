@@ -23,8 +23,8 @@ jobs:
       run: |
         set -e
         npx playwright test
-    - name: Copy Playwright Report to Publish Directorys
-    #   if: always()
+    - name: Copy Playwright Report to playwright-report-publish folder
+      if: always()
       run: cp -R playwright-report/ playwright-report-publish/ || true
     - name: Commit Playwright Report
       if: always()
