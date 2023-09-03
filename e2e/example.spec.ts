@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Hello I am a test', async ({ page }) => {
+test('NOW IS IT WORKING?', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Expect a title "to contain" a substring.
@@ -17,10 +17,10 @@ test('Get Started link navigates to Installation page', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('Did it finally work again! This test fails!', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+// test('Did it finally work again! This test fails!', async ({ page }) => {
+//   await page.goto('https://playwright.dev/');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-  await expect('1').toBe('2');
-});
+//   // Click the get started link.
+//   await page.getByRole('link', { name: 'Get started' }).click();
+//   await expect('1').toBe('2');
+// });
