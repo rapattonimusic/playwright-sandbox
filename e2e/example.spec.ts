@@ -17,7 +17,7 @@ test('Get Started link navigates to Installation page', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('Change 3! This test fails!', async ({ page }) => {
+test('Did it finally work again! This test fails!', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
