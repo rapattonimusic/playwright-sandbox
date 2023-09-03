@@ -1,0 +1,50 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: |
+        set -e
+        npx playwright test
+    - name: Checkout playwright-reports branch
+      if: always()
+      run: |
+        git config --global user.name "rapattonimusic"
+        git config --global user.email "rapattonimusic@me.com"
+        git checkout playwright-reports
+        git pull origin playwright-reports
+    - name: Copy Playwright Report to playwright-report-publish folder
+      if: always()
+      run: cp -R playwright-report/. playwright-report-publish/
+    - name: Commit Playwright Report
+      if: always()
+      run: |
+        git config --global user.name "rapattonimusic"
+        git config --global user.email "rapattonimusic@me.com"
+        git checkout playwright-reports
+        git add playwright-report-publish/
+        git commit -m "Update Playwright reports"
+        git push origin playwright-reports
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
