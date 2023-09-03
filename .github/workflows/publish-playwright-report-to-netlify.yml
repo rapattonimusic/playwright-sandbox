@@ -30,6 +30,8 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
-      - name: Set report link
-        id: set-report-link
-        run: echo "::set-output name=report-link::https://dazzling-axolotl-52126b.netlify.app"
+      - name: Post link to report
+        run: echo "{Go to Playwright Report}={https://dazzling-axolotl-52126b.netlify.app}" >> $GITHUB_OUTPUT
+      # - name: Set report link
+      #   id: set-report-link
+      #   run: echo "::set-output name=report-link::https://dazzling-axolotl-52126b.netlify.app"
