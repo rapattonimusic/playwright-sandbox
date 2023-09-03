@@ -24,8 +24,8 @@ jobs:
     - name: Checkout playwright-reports branch
       if: always()
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        git config --global user.name "rapattonimusic"
+        git config --global user.email "rapattonimusic@me.com"
         git checkout playwright-reports
         git pull origin playwright-reports
     - name: Copy Playwright Report to playwright-report-publish folder
@@ -34,9 +34,9 @@ jobs:
     - name: Commit Playwright Report
       if: always()
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git checkout playwright-reports $GITHUB_REF
+        git config --global user.name "rapattonimusic"
+        git config --global user.email "rapattonimusic@me.com"
+        git checkout playwright-reports
         git add playwright-report-publish/
         git commit -m "Update Playwright reports"
         git push origin playwright-reports
