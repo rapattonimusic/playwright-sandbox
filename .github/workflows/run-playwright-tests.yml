@@ -25,7 +25,7 @@ jobs:
       if: always()
       run: |
         git fetch origin playwright-reports:playwright-reports
-        git checkout playwright-reports
+        git checkout -b playwright-reports
         git pull origin playwright-reports
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
