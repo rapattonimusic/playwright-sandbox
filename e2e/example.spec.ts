@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('NOW IS IT WORKING?', async ({ page }) => {
+test('Nicko GOT IT TO WORK!', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('Get Started link navigates to Installation page', async ({ page }) => {
+test('Yes he did!', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
@@ -17,7 +17,7 @@ test('Get Started link navigates to Installation page', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('BOOOOO YAAAA!', async ({ page }) => {
+test('OH HEEAAAAAOOOOOOOO YAAAA!', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
