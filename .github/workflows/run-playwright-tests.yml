@@ -35,6 +35,8 @@ jobs:
     - name: Commit Playwright Report
       if: always()
       run: |
+        git config --global user.email "rapattonimusic@me.com"
+        git config --global user.name "rapattonimusic"
         git add playwright-report-publish/
         git commit -m "Update Playwright reports"
         git push origin playwright-reports
