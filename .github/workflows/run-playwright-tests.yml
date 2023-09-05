@@ -77,4 +77,4 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
       - name: Post link to report
-        run: echo "{Go to Playwright Report}={https://dazzling-axolotl-52126b.netlify.app}" >> $GITHUB_OUTPUT
+        run: echo "{Go to Playwright Report}={https://dazzling-axolotl-52126b.netlify.app/job${{ github.job_number }}/}" >> $GITHUB_OUTPUT
