@@ -33,6 +33,7 @@ jobs:
       if: always()
       run: |
         rm -rf playwright-report-publish/
+        mkdir -p playwright-report-publish/job${{ github.job_number }}/
         cp -R playwright-report/. playwright-report-publish/job${{ github.job_number }}/
     - name: Commit Playwright Report
       if: always()
