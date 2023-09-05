@@ -33,14 +33,14 @@ jobs:
       if: always()
       run: |
         rm -rf playwright-report-publish/
-        cp -R playwright-report/. playwright-report-publish/
+        cp -R playwright-report/. playwright-report-publish/job${{ github.job_number }}/
     - name: Commit Playwright Report
       if: always()
       run: |
         git config --global user.email "rapattonimusic@me.com"
         git config --global user.name "rapattonimusic"
         git add playwright-report-publish/
-        git commit -m "Update Playwright reports"
+        git commit -m "Add reports for job ${{ github.job_number }}"
         git push origin playwright-reports
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
