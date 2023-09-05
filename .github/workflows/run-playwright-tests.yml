@@ -33,15 +33,15 @@ jobs:
       if: always()
       run: |
         rm -rf playwright-report-publish/
-        mkdir -p playwright-report-publish/job${{ github.job_number }}/
-        cp -R playwright-report/. playwright-report-publish/job${{ github.job_number }}/
+        mkdir -p playwright-report-publish/job${{ github.run_number }}/
+        cp -R playwright-report/. playwright-report-publish/job${{ github.run_number }}/
     - name: Commit Playwright Report
       if: always()
       run: |
         git config --global user.email "rapattonimusic@me.com"
         git config --global user.name "rapattonimusic"
         git add playwright-report-publish/
-        git commit -m "Add reports for job ${{ github.job_number }}"
+        git commit -m "Add reports for job ${{ github.run_number }}"
         git push origin playwright-reports
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,4 +78,4 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
       - name: Post link to report
-        run: echo "{Go to Playwright Report}={https://dazzling-axolotl-52126b.netlify.app/job${{ github.job_number }}/}" >> $GITHUB_OUTPUT
+        run: echo "{Go to Playwright Report}={https://dazzling-axolotl-52126b.netlify.app/job${{ github.run_number }}/}" >> $GITHUB_OUTPUT
