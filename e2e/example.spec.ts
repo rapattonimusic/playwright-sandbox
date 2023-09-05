@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('THIS SHOULD BE RUN 55', async ({ page }) => {
+test('THIS SHOULD BE RUN 56', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Expect a title "to contain" a substring.
@@ -17,10 +17,10 @@ test('Yes he did!', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-// test('OH HEEAAAAAOOOOOOOO YAAAA!', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
+test('OH HEEAAAAAOOOOOOOO YAAAA!', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
 
-//   // Click the get started link.
-//   await page.getByRole('link', { name: 'Get started' }).click();
-//   await expect('1').toBe('2');
-// });
+  // Click the get started link.
+  await page.getByRole('link', { name: 'Get started' }).click();
+  await expect('1').toBe('2');
+});
