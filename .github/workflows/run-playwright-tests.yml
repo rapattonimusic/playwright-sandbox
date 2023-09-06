@@ -24,9 +24,21 @@ jobs:
         npx playwright test
     - name: Prepare Playwright test report for publishing
       if: always()
+      # run: |
+      #   chmod +x ./e2e/workflow/prepare-report-for-publishing.sh
+      #   ./e2e/workflow/prepare-report-for-publishing.sh ${{ github.run_number }}
       run: |
-        chmod +x ./e2e/workflow/prepare-report-for-publishing.sh
-        ./e2e/workflow/prepare-report-for-publishing.sh ${{ github.run_number }}
+        git fetch origin playwright-report-publish
+        git checkout playwright-report-publish
+        mkdir -p playwright-report-publish/job${{ github.run_number }}
+        cp -R ./playwright-report ./playwright-report-publish/job${{ github.run_number }}
+        cp -R ./playwright-report ./playwright-report-publish/
+        git config --global user.email "rapattonimusic@me.com"
+        git config --global user.name "rapattonimusic"
+        git add playwright-report-publish/
+        git commit -m "Add reports for job ${{ github.run_number }}"
+        git push origin playwright-report-publish
+
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/upload-artifact@v2
