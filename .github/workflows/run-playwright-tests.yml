@@ -34,6 +34,7 @@ jobs:
       run: |
         mkdir -p playwright-report-publish/job${{ github.run_number }}/
         cp -R playwright-report/. playwright-report-publish/job${{ github.run_number }}/
+        cp -R playwright-report/. playwright-report-publish/
     - name: Commit Playwright Report
       if: always()
       run: |
