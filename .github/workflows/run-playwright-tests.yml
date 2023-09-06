@@ -33,8 +33,8 @@ jobs:
     - name: Prepare playwright report for publishing
       if: always()
       run: |
-        chmod +x workflow/prepare-report-for-publishing.sh
-        ./workflow/prepare-report-for-publishing.sh ${{ github.run_number }}
+        chmod +x .e2e/workflow/prepare-report-for-publishing.sh
+        .e2e/workflow/prepare-report-for-publishing.sh ${{ github.run_number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/upload-artifact@v2
