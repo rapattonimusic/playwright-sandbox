@@ -1,6 +1,0 @@
-[build]
-  publish = "playwright-report/"
-
-[build.environment]
-  GITHUB_CLIENT_ID = "0ca182f24637e614b68a"
-  GITHUB_CLIENT_SECRET = "25b0ba232d46f6b5a568a6f1b753fa09216a05f3"
