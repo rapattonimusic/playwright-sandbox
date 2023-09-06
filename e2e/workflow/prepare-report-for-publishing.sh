@@ -1,12 +1,6 @@
 #!/bin/bash
 
 job_number=$1
-echo "Job number: $job_number"
-echo "Checking out playwright-reports branch..."
-git fetch origin playwright-reports:playwright-reports
-git checkout playwright-reports
-git pull origin playwright-reports
-
 echo "Copying report files..."
 mkdir -p playwright-report-publish/job$job_number
 cp -R playwright-report/. playwright-report-publish/job$job_number
