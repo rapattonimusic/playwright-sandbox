@@ -6,6 +6,7 @@ on:
     branches: [ main, master ]
 jobs:
   test:
+    name: 'Run Playwright Tests'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +18,7 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
+    - name: Run tests
       run: |
         set -e
         npx playwright test
@@ -52,6 +53,7 @@ jobs:
         path: playwright-report/
         retention-days: 30
   publishReport:
+    name: 'Publish Report to Netlify'
     needs: test
     runs-on: ubuntu-22.04
     if: always()
@@ -78,4 +80,5 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
       - name: Post link to report
-        run: echo "{Go to Playwright Report}={https://dazzling-axolotl-52126b.netlify.app/job${{ github.run_number }}/}" >> $GITHUB_OUTPUT
+        run: echo "{Go to Playwright Report}={https://output-e2e-o-subscriptions.netlify.app/job${{ github.run_number }}/}" >> $GITHUB_OUTPUT
+        
