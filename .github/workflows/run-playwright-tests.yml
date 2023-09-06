@@ -22,14 +22,14 @@ jobs:
       run: |
         set -e
         npx playwright test
-    # - name: Checkout playwright-reports branch
+    - name: Checkout playwright-reports branch
     #   if: always()
-    #   run: |
-    #     git fetch origin playwright-reports:playwright-reports
-    #     git checkout playwright-reports
-    #     git pull origin playwright-reports
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git fetch origin playwright-reports:playwright-reports
+        git checkout playwright-reports
+        git pull origin playwright-reports
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     # - name: Copy Playwright Report to playwright-report-publish folder
     #   if: always()
     #   run: |
