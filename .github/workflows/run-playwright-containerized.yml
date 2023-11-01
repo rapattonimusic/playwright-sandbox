@@ -20,8 +20,8 @@ jobs:
 
     - name: Run tests in Docker container and collect the report
       run: |
-        docker run -t playwright-sandbox npx playwright test --reporter=html
-        docker cp playwright-sandbox:/app/playwright-report ./
+        docker run -it --name playwright-sandbox-container playwright-sandbox npx playwright test --reporter=html
+        docker docker cp playwright-sandbox-container:/app/playwright-report ./
     
     - name: Upload the report as an artifact
       uses: actions/upload-artifact@v2
