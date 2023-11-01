@@ -19,7 +19,7 @@ jobs:
       run: docker build -t playwright-sandbox .
 
     - name: Run tests in Docker container
-      run: docker run -it playwright-sandbox npx playwright test --reporter=html
+      run: docker run -t playwright-sandbox npx playwright test --reporter=html
 
     - name: Copy the report from the container to the host working directory
       run: docker cp playwright-sandbox:/app/playwright-report ./
