@@ -15,7 +15,7 @@ jobs:
       with:
         node-version: 18
 
-    - name: Create Docker image
+    - name: Build Docker image
       run: docker build -t playwright-sandbox .
 
     - name: Run tests in Docker container and collect the report
