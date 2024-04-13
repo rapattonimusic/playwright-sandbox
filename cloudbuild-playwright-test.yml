@@ -8,4 +8,4 @@ steps:
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['npx', 'playwright', 'test']
-  dir: 'playwright-sandbox' # replace with your repo name
+  dir: 'playwright-sandbox' # replace with your repo names
