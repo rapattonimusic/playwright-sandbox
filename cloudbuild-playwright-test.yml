@@ -17,6 +17,11 @@ steps:
 
 - name: 'node'
   entrypoint: 'npx'
+  args: ['playwright', 'install']
+  dir: 'playwright-sandbox'
+
+- name: 'node'
+  entrypoint: 'npx'
   args: ['playwright', 'test']
   dir: 'playwright-sandbox'
 
