@@ -1,4 +1,7 @@
 steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['pubsub', 'topics', 'publish', 'playwright-run-status-sub', '--message', 'running']
+
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
@@ -16,3 +19,6 @@ steps:
   entrypoint: 'npx'
   args: ['playwright', 'test']
   dir: 'playwright-sandbox'
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['pubsub', 'topics', 'publish', 'playwright-run-status-sub', '--message', 'complete']
