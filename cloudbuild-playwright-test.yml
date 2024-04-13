@@ -10,20 +10,5 @@ steps:
   args: ['install']
   dir: 'playwright-sandbox'
 
-- name: 'node'
-  entrypoint: 'npx'
-  args: ['playwright', 'install']
-  dir: 'playwright-sandbox'
-
-- name: 'node'
-  entrypoint: 'npx'
-  args: ['playwright', 'install-deps']
-  dir: 'playwright-sandbox'
-
-- name: 'node'
-  entrypoint: 'npx'
-  args: ['playwright', 'test']
-  dir: 'playwright-sandbox'
-
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', 'complete']
