@@ -15,9 +15,10 @@ steps:
   args: ['playwright', 'install']
   dir: 'playwright-sandbox'
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args: ['npx playwright install-deps']
+- name: 'node'
+  entrypoint: 'npx'
+  args: ['playwright', 'install-deps']
+  dir: 'playwright-sandbox'
 
 - name: 'node'
   entrypoint: 'npx'
