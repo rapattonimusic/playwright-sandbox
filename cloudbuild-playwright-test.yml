@@ -2,10 +2,17 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
-- name: 'gcr.io/cloud-builders/npm'
+- name: 'node'
+  entrypoint: 'npm'
   args: ['install']
-  dir: 'playwright-sandbox' # replace with your repo name
+  dir: 'playwright-sandbox'
 
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['npx', 'playwright', 'test']
-  dir: 'playwright-sandbox' # replace with your repo names
+- name: 'node'
+  entrypoint: 'npx'
+  args: ['playwright', 'install']
+  dir: 'playwright-sandbox'
+
+- name: 'node'
+  entrypoint: 'npx'
+  args: ['playwright', 'test']
+  dir: 'playwright-sandbox'
