@@ -21,5 +21,14 @@ steps:
 #   - '--message={"repo": "o-accounts", "status": "pass"}'
 
 # Publish to Pub/Sub to trigger Playwright tests
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "o-accounts", "status": "pass"}']
+
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "o-accounts", "status": "pass"}']
+  args:
+    - 'pubsub'
+    - 'topics'
+    - 'publish'
+    - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+    - '--message'
+    - '{"repo": "o-accounts", "status": "pass"}'
