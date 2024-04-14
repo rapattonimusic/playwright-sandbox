@@ -24,11 +24,5 @@ steps:
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "o-accounts", "status": "pass"}']
 
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-    - 'pubsub'
-    - 'topics'
-    - 'publish'
-    - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-    - '--message'
-    - 'Hello!'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', 'Success']
