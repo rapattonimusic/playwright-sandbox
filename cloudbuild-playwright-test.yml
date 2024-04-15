@@ -1,14 +1,6 @@
-# Step: Publish the test status to the Pub/Sub topic
+steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - 'gcloud'
-  - 'pubsub'
-  - 'topics'
-  - 'publish'
-  - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-  - '--message'
-  - '{"repo": "oAccounts", "status": "running"}'
-
+  args: ['gcloud', 'pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "running"}']
 
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
@@ -26,3 +18,4 @@
   - |
     TEST_OUTCOME=$(if [ $(cat exit_code.txt) -eq 0 ]; then echo "pass"; else echo "fail"; fi)
     gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"$TEST_OUTCOME\"}"
+    
