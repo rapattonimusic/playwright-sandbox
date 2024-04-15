@@ -1,21 +1,4 @@
-steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', 'running']
-
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
-
-# - name: 'node'
-#   entrypoint: 'npm'
-#   args: ['install']
-#   dir: 'playwright-sandbox'
-
-# Step: Echo "Run tests"
-- name: 'ubuntu'
-  entrypoint: 'bash'
-  args: ['-c', 'echo "Run tests"']
-
-# Step: Publish the message to the Pub/Sub topic
+# Step: Publish the test status to the Pub/Sub topic
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - 'gcloud'
@@ -24,7 +7,22 @@ steps:
   - 'publish'
   - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
   - '--message'
-  - '{"repo": "oAccounts", "status": "pass"}'
+  - '{"repo": "oAccounts", "status": "running"}'
 
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
+
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
+
+# Step: Run tests
+- name: 'ubuntu'
+  entrypoint: 'bash'
+  args: ['-c', 'npm install && npm test; echo $? > exit_code.txt']
+
+# Step: Publish the message to the Pub/Sub topic
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    TEST_OUTCOME=$(if [ $(cat exit_code.txt) -eq 0 ]; then echo "pass"; else echo "fail"; fi)
+    gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"$TEST_OUTCOME\"}"
