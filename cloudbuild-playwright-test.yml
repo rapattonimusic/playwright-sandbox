@@ -16,6 +16,8 @@ steps:
   args:
   - '-c'
   - |
-    if [ $(cat exit_code.txt) -eq 0 ]; then echo "pass" > test_outcome.txt; else echo "fail" > test_outcome.txt; fi
-    TEST_OUTCOME=$(cat test_outcome.txt)
-    gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"$TEST_OUTCOME\"}"
+    TEST_OUTCOME=$(if [ $(cat exit_code.txt) -eq 0 ]; then echo "pass"; else echo "fail"; fi)
+    gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message '{"repo": "oAccounts", "status": "'"$_TEST_OUTCOME"'"}'
+
+substitutions:
+  _TEST_OUTCOME: ''
