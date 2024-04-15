@@ -20,6 +20,8 @@ exports.updateFirebase = async (event, context) => {
 
     if (build) {
       try {
+        // Wait for 10 seconds
+        await new Promise(resolve => setTimeout(resolve, 10000))
         await admin.database().ref(`repos/${message.repo}`).update({ 
           id: build.id,
           status: build.status,
