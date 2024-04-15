@@ -25,4 +25,4 @@ steps:
 #   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "o-accounts", "status": "pass"}']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "pass"}']
+  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
