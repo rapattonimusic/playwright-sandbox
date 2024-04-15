@@ -1,18 +1,19 @@
-# Step: Publish the test status to the Pub/Sub topic
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - 'gcloud'
-  - 'pubsub'
-  - 'topics'
-  - 'publish'
-  - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-  - '--message'
-  - '{"repo": "oAccounts", "status": "running"}'
+steps:
+  # Step: Publish the test status to the Pub/Sub topic
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'pubsub'
+      - 'topics'
+      - 'publish'
+      - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+      - '--message'
+      - '{"repo": "oAccounts", "status": "running"}'
 
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
-# Step: Run tests and publish the test status
-- name: 'ubuntu'
-  entrypoint: 'bash'
-  args: ['-c', 'cd playwright-sandbox && npm install && npm test; STATUS=$?; if [ $STATUS -eq 0 ]; then gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"pass\"}"; else gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"fail\"}"; fi']
+  # Step: Run tests and publish the test status
+  - name: 'ubuntu'
+    entrypoint: 'bash'
+    args: ['-c', 'cd playwright-sandbox && npm install && npm test; STATUS=$?; if [ $STATUS -eq 0 ]; then gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"pass\"}"; else gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"fail\"}"; fi']
