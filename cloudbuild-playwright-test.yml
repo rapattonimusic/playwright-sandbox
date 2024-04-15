@@ -10,19 +10,16 @@ steps:
   args: ['install']
   dir: 'playwright-sandbox'
 
-# # Step: Publish the message to the Pub/Sub topic
-# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-#   args:
-#   - 'gcloud'
-#   - 'pubsub'
-#   - 'topics'
-#   - 'publish'
-#   - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-#   - '--message={"repo": "o-accounts", "status": "pass"}'
-
-# Publish to Pub/Sub to trigger Playwright tests
+# Step: Publish the message to the Pub/Sub topic
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - 'gcloud'
+  - 'pubsub'
+  - 'topics'
+  - 'publish'
+  - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+  - '--message'
+  - '{"repo": "o-accounts", "status": "pass"}'
+  
 # - name: 'gcr.io/cloud-builders/gcloud'
-#   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "o-accounts", "status": "pass"}']
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
+#   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
