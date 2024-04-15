@@ -15,16 +15,16 @@ steps:
   entrypoint: 'bash'
   args: ['-c', 'echo "Run tests"']
 
-# # Step: Publish the message to the Pub/Sub topic
-# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-#   args:
-#   - 'gcloud'
-#   - 'pubsub'
-#   - 'topics'
-#   - 'publish'
-#   - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-#   - '--message'
-#   - '{"repo": "o-accounts", "status": "pass"}'
+# Step: Publish the message to the Pub/Sub topic
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - 'gcloud'
+  - 'pubsub'
+  - 'topics'
+  - 'publish'
+  - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+  - '--message'
+  - '{"repo": "oAccounts", "status": "pass"}'
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
