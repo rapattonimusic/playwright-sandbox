@@ -13,7 +13,5 @@ steps:
   - name: 'gcr.io/cloud-builders/git'
     args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
-  # Step: Run tests and publish the test status
-  - name: 'ubuntu'
-    entrypoint: 'bash'
-    args: ['-c', 'cd playwright-sandbox && npm install && npm test; STATUS=$?; if [ $STATUS -eq 0 ]; then gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"pass\"}"; else gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"status\": \"fail\"}"; fi']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['pubsub', 'topics', 'publish', 'projects/playwright-sandbox-403213/topics/playwright-run-status', '--message', '{"repo": "oAccounts", "status": "fail"}']
