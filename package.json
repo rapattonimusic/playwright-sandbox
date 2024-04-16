@@ -9,5 +9,8 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "1.38.0"
+  },
+  "dependencies": {
+    "@google-cloud/cloudbuild": "^4.4.0"
   }
 }
