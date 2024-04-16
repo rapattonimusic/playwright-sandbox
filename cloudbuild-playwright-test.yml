@@ -17,7 +17,7 @@ steps:
   # Step: Run tests
   - name: 'ubuntu'
     entrypoint: 'bash'
-    args: ['-c', 'echo "Run tests"']
+    args: ['-c', 'sleep 120']
 
   # Step: Publish result to the Pub/Sub topic
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
