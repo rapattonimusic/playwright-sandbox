@@ -1,4 +1,15 @@
 steps:
+  # Step: Publish result to the Pub/Sub topic
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'pubsub'
+      - 'topics'
+      - 'publish'
+      - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+      - '--message'
+      - '{"repo": "oAccounts", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+  
   # Checkout repo
   - name: 'gcr.io/cloud-builders/git'
     args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
