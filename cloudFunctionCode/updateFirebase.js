@@ -7,6 +7,8 @@ admin.initializeApp({
 });
 
 exports.updateFirebase = async (event, context) => {
+  // Wait for 10 seconds
+  await new Promise(resolve => setTimeout(resolve, 10000))
   const cbClient = new CloudBuildClient();
   const message = event.data
     ? JSON.parse(Buffer.from(event.data, 'base64').toString())
@@ -19,9 +21,11 @@ exports.updateFirebase = async (event, context) => {
     const [build] = await cbClient.getBuild({ projectId, id: buildId });
 
     if (build) {
+      console.log(`BUILD_ID: ${build.id}`)
+      console.log(`STATUS: ${build.status}`)
+      console.log(`LOGS_URL: ${build.logUrl}`)
+      console.log('About to update Firebase')
       try {
-        // Wait for 10 seconds
-        await new Promise(resolve => setTimeout(resolve, 10000))
         await admin.database().ref(`repos/${message.repo}`).update({ 
           id: build.id,
           status: build.status,
