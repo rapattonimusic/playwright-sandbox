@@ -2,6 +2,7 @@ const admin = require('firebase-admin');
 const { CloudBuildClient } = require('@google-cloud/cloudbuild');
 
 admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
   databaseURL: 'https://playwright-sandbox-403213.firebaseio.com',
   projectId: 'playwright-sandbox-403213'
 });
