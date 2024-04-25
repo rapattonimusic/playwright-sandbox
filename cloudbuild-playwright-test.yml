@@ -15,24 +15,34 @@ steps:
     args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
   # Step: Install dependencies
-  - name: 'gcr.io/cloud-builders/npm'
+  - name: 'mcr.microsoft.com/playwright'
+    entrypoint: 'npm'
     args: ['install']
 
-  # Step: Install Playwright dependencies
-  - name: 'node'
-    entrypoint: 'npx'
-    args: ['playwright', 'install-deps']
-
-  # Step: Install Playwright browsers
-  - name: 'node'
-    entrypoint: 'npx'
-    args: ['playwright', 'install']
-  
   # Step: Run Playwright tests
-  - name: 'node'
-    entrypoint: 'npx'
-    args: ['-c',
-      'playwright test; echo $? > /workspace/test_exit_code || true ' ]
+  - name: 'mcr.microsoft.com/playwright'
+    entrypoint: 'bash'
+    args: ['-c', 'npm run test; echo $? > /workspace/test_exit_code || true']
+
+  # # Step: Install dependencies
+  # - name: 'gcr.io/cloud-builders/npm'
+  #   args: ['install']
+
+  # # Step: Install Playwright dependencies
+  # - name: 'node'
+  #   entrypoint: 'npx'
+  #   args: ['playwright', 'install-deps']
+
+  # # Step: Install Playwright browsers
+  # - name: 'node'
+  #   entrypoint: 'npx'
+  #   args: ['playwright', 'install']
+  
+  # # Step: Run Playwright tests
+  # - name: 'node'
+  #   entrypoint: 'npx'
+  #   args: ['-c',
+  #     'playwright test; echo $? > /workspace/test_exit_code || true ' ]
   
   # # Step: Run tests
   # - name: 'ubuntu'
