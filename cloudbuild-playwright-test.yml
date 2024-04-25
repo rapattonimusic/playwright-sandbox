@@ -14,10 +14,22 @@ steps:
   - name: 'gcr.io/cloud-builders/git'
     args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
-  # Step: Run tests
-  - name: 'ubuntu'
-    entrypoint: 'bash'
-    args: ['-c', 'sleep 120']
+  # Step: Install dependencies
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  # Step: Install Playwright
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['npx', 'playwright', 'install']
+  
+  # Step: Run Playwright tests
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['npx', 'playwright', 'test', 'echo $? > /workspace/test_exit_code || true']
+  
+  # # Step: Run tests
+  # - name: 'ubuntu'
+  #   entrypoint: 'bash'
+  #   args: ['-c', 'sleep 120']
 
   # Step: Publish result to the Pub/Sub topic
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -29,4 +41,5 @@ steps:
       - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
       - '--message'
       - '{"repo": "oAccounts", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+      - 'test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code'
 
