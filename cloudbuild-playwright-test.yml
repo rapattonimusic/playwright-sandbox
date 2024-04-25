@@ -18,10 +18,15 @@ steps:
   - name: 'gcr.io/cloud-builders/npm'
     args: ['install']
 
+  # Step: Install Playwright dependencies
+  - name: 'node'
+    entrypoint: 'npx'
+    args: ['playwright', 'install-deps']
+
   # Step: Install Playwright browsers
   - name: 'node'
     entrypoint: 'npx'
-    args: ['playwright', 'install-deps', 'chromium']
+    args: ['playwright', 'install']
   
   # Step: Run Playwright tests
   - name: 'node'
