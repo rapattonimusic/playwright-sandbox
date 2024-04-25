@@ -21,13 +21,13 @@ steps:
   # Step: Install Playwright browsers
   - name: 'node'
     entrypoint: 'npx'
-    args: ['playwright', 'install']
+    args: ['playwright', 'install', 'chromium']
   
   # Step: Run Playwright tests
   - name: 'node'
     entrypoint: 'npx'
     args: ['-c',
-      'npx playwright test; echo $? > /workspace/test_exit_code || true ' ]
+      'playwright test; echo $? > /workspace/test_exit_code || true ' ]
   
   # # Step: Run tests
   # - name: 'ubuntu'
@@ -38,7 +38,7 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args: ['-c',
-      'gcloud pubsub topics publish projects/output-accounts/topics/playwright-dashboard --message "{\"repo\": \"oAccounts\", \"buildId\": \"$BUILD_ID\", \"projectId\": \"$PROJECT_ID\"}"; test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code']
+      'gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"buildId\": \"$BUILD_ID\", \"projectId\": \"$PROJECT_ID\"}"; test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code']
 
   # # Step: Publish result to the Pub/Sub topic
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
