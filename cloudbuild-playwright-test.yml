@@ -21,7 +21,7 @@ steps:
   # Step: Install Playwright browsers
   - name: 'node'
     entrypoint: 'npx'
-    args: ['playwright', 'install', 'chromium']
+    args: ['playwright', 'install-deps', 'chromium']
   
   # Step: Run Playwright tests
   - name: 'node'
