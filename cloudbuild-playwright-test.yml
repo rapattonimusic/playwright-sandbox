@@ -15,12 +15,12 @@ steps:
     args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
 
   # Step: Install dependencies
-  - name: 'mcr.microsoft.com/playwright:v1.43.1-jammy'
+  - name: 'mcr.microsoft.com/playwright:v1.38.0-jammy'
     entrypoint: 'npm'
     args: ['install']
 
   # Step: Run Playwright tests
-  - name: 'mcr.microsoft.com/playwright:v1.43.1-jammy'
+  - name: 'mcr.microsoft.com/playwright:v1.38.0-jammy'
     entrypoint: 'bash'
     args: ['-c', 'npm run test; echo $? > /workspace/test_exit_code || true']
 
