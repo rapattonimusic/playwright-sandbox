@@ -20,14 +20,7 @@ exports.updateFirebase = async (event, context) => {
     const buildId = message.buildId;
     const environment = message.environment
 
-    let build;
-    let attempts = 0;
-    do {
-      // Wait for 10 seconds before each attempt
-      await new Promise(resolve => setTimeout(resolve, 10000));
-      [build] = await cbClient.getBuild({ projectId, id: buildId });
-      attempts++;
-    } while (build.status === 'WORKING' && attempts < 30);  // Check status for up to 300 seconds
+    const [build] = await cbClient.getBuild({ projectId, id: buildId });
 
     if (build) {
       console.log(`BUILD_ID: ${build.id}`)
