@@ -18,6 +18,7 @@ exports.updateFirebase = async (event, context) => {
   if (message) {
     const projectId = message.projectId
     const buildId = message.buildId;
+    const environment = message.environment
 
     const [build] = await cbClient.getBuild({ projectId, id: buildId });
 
@@ -26,18 +27,43 @@ exports.updateFirebase = async (event, context) => {
       console.log(`STATUS: ${build.status}`)
       console.log(`LOGS_URL: ${build.logUrl}`)
       console.log('About to update Firebase')
-      try {
-        await admin.database().ref(`repos/${message.repo}`).update({ 
-          id: build.id,
-          status: build.status,
-          startTime: build.startTime,
-          finishTime: build.finishTime,
-          logsUrl: build.logUrl,
-        });
-        console.log(`Updated Firebase with latest build status`);
-      } catch (error) {
-        console.error('Error updating database: ', error);
+
+      switch (environment) {
+        case 'staging':
+          try {
+            await admin.database().ref(`repos/${message.repo}`).update({
+              staging: {
+                id: build.id,
+                status: build.status,
+                startTime: build.startTime,
+                finishTime: build.finishTime,
+                logsUrl: build.logUrl,
+              }
+            });
+            console.log(`Updated Firebase with latest build status`);
+          } catch (error) {
+            console.error('Error updating database: ', error);
+          }
+          break
+
+        case 'production':
+          try {
+            await admin.database().ref(`repos/${message.repo}`).update({
+              production: {
+                id: build.id,
+                status: build.status,
+                startTime: build.startTime,
+                finishTime: build.finishTime,
+                logsUrl: build.logUrl,
+              }
+            });
+            console.log(`Updated Firebase with latest build status`);
+          } catch (error) {
+            console.error('Error updating database: ', error);
+          }
+        break
       }
+      
     } else {
       console.log('No build found with the provided ID');
     }
