@@ -1,4 +1,15 @@
 steps:
+  # Step: Publish result to the Pub/Sub topic
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'pubsub'
+      - 'topics'
+      - 'publish'
+      - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+      - '--message'
+      - '{"repo": "oAccounts", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+
   # Docker Build (for Playwright tests)
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
@@ -25,6 +36,17 @@ steps:
     entrypoint: 'bash'
     args: ['-c',
       'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest']
+
+  # Step: Publish result to the Pub/Sub topic
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'pubsub'
+      - 'topics'
+      - 'publish'
+      - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
+      - '--message'
+      - '{"repo": "oAccounts", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
 
 images:
 - 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest'
