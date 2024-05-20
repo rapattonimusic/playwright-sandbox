@@ -9,7 +9,7 @@ admin.initializeApp({
 
 exports.updateFirebase = async (event, context) => {
   // Wait for 10 seconds
-  await new Promise(resolve => setTimeout(resolve, 30000))
+  await new Promise(resolve => setTimeout(resolve, 60000))
   const cbClient = new CloudBuildClient();
   const message = event.data
     ? JSON.parse(Buffer.from(event.data, 'base64').toString())
