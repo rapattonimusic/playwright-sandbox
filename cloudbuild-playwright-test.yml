@@ -5,7 +5,7 @@ steps:
     env:
       - 'BUILD_ID=$BUILD_ID'
     args: ['-c', 
-      'docker build --no-cache --file Dockerfile.test -t us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright
+      'docker build --no-cache --file Dockerfile.test -t us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest
       --build-arg CI_PROVIDER="gcloud"
       --build-arg GCLOUD_BUILD_ID=$BUILD_ID
       --build-arg TEST_ENVIRONMENT_NAME="staging"
@@ -17,19 +17,19 @@ steps:
     args:
       [
         'push',
-        'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright',
+        'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest',
       ]
 
   # Run Playwright Tests
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args: ['-c',
-      'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright']
+      'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest']
 
 images:
-- 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright'
+- 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest'
 
 artifacts:
   objects:
-    location: 'gs://gcf-v2-sources-945906639184-us-west2/'
+    location: 'gs://playwright-artifacts/'
     paths: ['playwright-report/**']
