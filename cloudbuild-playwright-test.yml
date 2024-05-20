@@ -5,11 +5,11 @@ steps:
     env:
       - 'BUILD_ID=$BUILD_ID'
     args: ['-c', 
-      'docker build --no-cache --file Dockerfile.test -t us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright \
-      --build-arg CI_PROVIDER="gcloud" \
-      --build-arg GCLOUD_BUILD_ID=$BUILD_ID \
-      --build-arg TEST_ENVIRONMENT_NAME="staging" \
-      --build-arg RUN_PLAYWRIGHT_COMMAND="npm run test" \
+      'docker build --no-cache --file Dockerfile.test -t us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright
+      --build-arg CI_PROVIDER="gcloud"
+      --build-arg GCLOUD_BUILD_ID=$BUILD_ID
+      --build-arg TEST_ENVIRONMENT_NAME="staging"
+      --build-arg RUN_PLAYWRIGHT_COMMAND="npm run test"
       --build-arg SLACK_REPORTING=false .']
   
   # Push
