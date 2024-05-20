@@ -1,6 +1,8 @@
 const admin = require('firebase-admin');
 const { CloudBuildClient } = require('@google-cloud/cloudbuild');
 
+const svcAcc = require('./serviceAccountKey.json')
+
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
   databaseURL: 'https://playwright-sandbox-403213.firebaseio.com',
