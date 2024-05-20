@@ -1,12 +1,15 @@
 # For the playwright tests
-FROM mcr.microsoft.com/playwright:v1.38.0-focal as playwright
+FROM mcr.microsoft.com/playwright:v1.40.0-focal as playwright
+# ARGS
+ARG RUN_PLAYWRIGHT_COMMAND
 WORKDIR /app
 COPY . ./
-COPY package.json package.json
+COPY package*.json ./
 # Install Xvfb
 # RUN apt-get update && apt-get install -y xvfb
-RUN npm install
+RUN npm ci
+ENV CI=true
+ENV RUN_PLAYWRIGHT_COMMAND=$RUN_PLAYWRIGHT_COMMAND
 ENV START_XVFB_SERVER_COMMAND="xvfb-run --auto-servernum --server-num=1 --server-args='-screen 0, 1920x1080x24'"
-ENV RUN_PLAYWRIGHT_COMMAND="npx playwright test"
 # Run the Playwright tests
 CMD bash -c "$RUN_PLAYWRIGHT_COMMAND"

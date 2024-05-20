@@ -1,69 +1,35 @@
 steps:
-  # Step: Publish result to the Pub/Sub topic
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args:
-      - 'gcloud'
-      - 'pubsub'
-      - 'topics'
-      - 'publish'
-      - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-      - '--message'
-      - '{"repo": "oAccounts", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
-  
-  # Checkout repo
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/rapattonimusic/playwright-sandbox']
-
-  # Step: Install dependencies
-  - name: 'mcr.microsoft.com/playwright:v1.38.0-jammy'
-    entrypoint: 'npm'
-    args: ['install']
-
-  # Step: Run Playwright tests
-  - name: 'mcr.microsoft.com/playwright:v1.38.0-jammy'
+  # Docker Build (for Playwright tests)
+  - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['-c', 'npm run test; echo $? > /workspace/test_exit_code || true']
-
-  # # Step: Install dependencies
-  # - name: 'gcr.io/cloud-builders/npm'
-  #   args: ['install']
-
-  # # Step: Install Playwright dependencies
-  # - name: 'node'
-  #   entrypoint: 'npx'
-  #   args: ['playwright', 'install-deps']
-
-  # # Step: Install Playwright browsers
-  # - name: 'node'
-  #   entrypoint: 'npx'
-  #   args: ['playwright', 'install']
+    env:
+      - 'BUILD_ID=$BUILD_ID'
+    args: ['-c', 
+      'docker build --no-cache --file Dockerfile.test --target playwright -t us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright \
+      --build-arg CI_PROVIDER="gcloud" \
+      --build-arg GCLOUD_BUILD_ID=$BUILD_ID \
+      --build-arg TEST_ENVIRONMENT_NAME="staging" \
+      --build-arg RUN_PLAYWRIGHT_COMMAND="npm run test" \
+      --build-arg SLACK_REPORTING=false .']
   
-  # # Step: Run Playwright tests
-  # - name: 'node'
-  #   entrypoint: 'npx'
-  #   args: ['-c',
-  #     'playwright test; echo $? > /workspace/test_exit_code || true ' ]
-  
-  # # Step: Run tests
-  # - name: 'ubuntu'
-  #   entrypoint: 'bash'
-  #   args: ['-c', 'sleep 120']
+  # Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright',
+      ]
 
-  # Step: Publish result to the Pub/Sub topic
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  # Run Playwright Tests
+  - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args: ['-c',
-      'gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oAccounts\", \"buildId\": \"$BUILD_ID\", \"projectId\": \"$PROJECT_ID\"}"; test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code']
+      'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright']
 
-  # # Step: Publish result to the Pub/Sub topic
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   args:
-  #     - 'gcloud'
-  #     - 'pubsub'
-  #     - 'topics'
-  #     - 'publish'
-  #     - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-  #     - '--message'
-  #     - '{"repo": "oAccounts", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
-  #     - 'test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code'
+images:
+- 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-sandbox-artifacts/playwright-sandbox-test-images:playwright'
 
+artifacts:
+  objects:
+    location: 'gs://gcf-v2-sources-945906639184-us-west2/'
+    paths: ['playwright-report/**']
