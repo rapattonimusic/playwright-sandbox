@@ -8,7 +8,7 @@ steps:
       - 'publish'
       - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
       - '--message'
-      - '{"repo": "oAccounts", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+      - '{"repo": "oAccounts", "environment": "production", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
 
   # Docker Build (for Playwright tests)
   - name: 'gcr.io/cloud-builders/docker'
@@ -19,7 +19,7 @@ steps:
       'docker build --no-cache --file Dockerfile.test -t us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest
       --build-arg CI_PROVIDER="gcloud"
       --build-arg GCLOUD_BUILD_ID=$BUILD_ID
-      --build-arg TEST_ENVIRONMENT_NAME="staging"
+      --build-arg TEST_ENVIRONMENT_NAME="production"
       --build-arg RUN_PLAYWRIGHT_COMMAND="npm run test"
       --build-arg SLACK_REPORTING=false .']
   
@@ -46,7 +46,7 @@ steps:
       - 'publish'
       - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
       - '--message'
-      - '{"repo": "oAccounts", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+      - '{"repo": "oAccounts", "environment": "production", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
 
 images:
 - 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest'
