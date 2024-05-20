@@ -31,5 +31,5 @@ images:
 
 artifacts:
   objects:
-    location: 'gs://playwright-artifacts/'
+    location: 'gs://playwright-sandbox-reports'
     paths: ['playwright-report/**']
