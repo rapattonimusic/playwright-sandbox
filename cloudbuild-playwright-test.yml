@@ -8,7 +8,7 @@ steps:
       - 'publish'
       - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
       - '--message'
-      - '{"repo": "oApiRoadManager", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+      - '{"repo": "oSubscriptions", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
 
   # Docker Build (for Playwright tests)
   - name: 'gcr.io/cloud-builders/docker'
@@ -46,7 +46,7 @@ steps:
       - 'publish'
       - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
       - '--message'
-      - '{"repo": "oApiRoadManager", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+      - '{"repo": "oSubscriptions", "environment": "staging", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
 
 images:
 - 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest'
