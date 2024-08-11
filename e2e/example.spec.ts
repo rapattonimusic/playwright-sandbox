@@ -5,7 +5,7 @@ test('This test will fail', async ({ page }) => {
 
   // Expect a title "to contain" a substring.
   // await expect(page).toHaveTitle(/Playwright/);
-  // Fail the test
+  // Fail the test man
   await expect(2).toBe(3);
 });
 
