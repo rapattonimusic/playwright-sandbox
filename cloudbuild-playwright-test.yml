@@ -1,0 +1,37 @@
+steps:
+  # Docker Build (for Playwright tests)
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    env:
+      - 'BUILD_ID=$BUILD_ID'
+    args: ['-c', 
+      'docker build --no-cache --file Dockerfile.test -t playwright-sandbox
+      --build-arg RUN_PLAYWRIGHT_COMMAND="npm run test:e2e" ./']
+  
+  # Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest',
+      ]
+
+  # Run Playwright Tests
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: ['-c',
+      # 'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest']
+      'docker run --rm us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest']
+
+  # Store Playwright report to storage bucket
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', '-r', 'playwright-report/*', 'gs://playwright-reports-hosted/BUILD_$BUILD_ID/']
+
+
+images:
+- 'us-west2-docker.pkg.dev/$PROJECT_ID/playwright-artifacts/playwright:latest'
+
+artifacts:
+  objects:
+    location: 'gs://playwright-reports-hosted'
+    paths: ['playwright-report/**']

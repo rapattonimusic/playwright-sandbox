@@ -1,0 +1,19 @@
+# For building the Playwright image
+FROM mcr.microsoft.com/playwright:v1.40.0-focal as playwright
+# Ingest the Docker build arguments
+ARG RUN_PLAYWRIGHT_COMMAND
+# Set the environment variables
+ENV NPM_TOKEN=$NPM_TOKEN
+ENV START_XVFB_SERVER_COMMAND="xvfb-run --auto-servernum --server-num=1 --server-args='-screen 0, 1920x1080x24'"
+ENV RUN_PLAYWRIGHT_COMMAND=$RUN_PLAYWRIGHT_COMMAND
+ENV CI=true
+# Copy the application files
+WORKDIR /app
+COPY . ./
+COPY package*.json ./
+## Install the application dependencies
+RUN npm ci
+## Install Xvfb depenendencies (for tests that require a headed browser)
+RUN apt-get update && apt-get install -y xvfb
+# Start the Xvfb server and run the Playwright tests
+CMD bash -c "$START_XVFB_SERVER_COMMAND $RUN_PLAYWRIGHT_COMMAND"
