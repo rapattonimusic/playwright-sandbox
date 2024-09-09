@@ -14,6 +14,6 @@ COPY package*.json ./
 ## Install the application dependencies
 RUN npm ci
 ## Install Xvfb depenendencies (for tests that require a headed browser)
-RUN apt-get update && apt-get install -y xvfb
+# RUN apt-get update && apt-get install -y xvfb
 # Start the Xvfb server and run the Playwright tests
-CMD bash -c "$START_XVFB_SERVER_COMMAND $RUN_PLAYWRIGHT_COMMAND"
+CMD bash -c "$RUN_PLAYWRIGHT_COMMAND"

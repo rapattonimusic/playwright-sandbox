@@ -17,7 +17,7 @@ steps:
 
   # Store Playwright report to storage bucket
   - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['-m', 'cp', '-r', 'playwright-report/*', 'gs://$PROJECT_ID-playwright-reports/BUILD_$BUILD_ID/']
+    args: ['-m', 'cp', '-r', 'playwright-report/*', 'gs://playwright-reports-hosted/BUILD_$BUILD_ID/']
 
   # Link to the report
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -25,7 +25,7 @@ steps:
     args:
       - '-c'
       - |
-        echo "Playwright report is available at: https://storage.googleapis.com/$PROJECT_ID-playwright-reports/BUILD_$BUILD_ID/index.html"
+        echo "Playwright report is available at: https://storage.googleapis.com/playwright-reports-hosted/BUILD_$BUILD_ID/index.html"
 
 
 artifacts:
