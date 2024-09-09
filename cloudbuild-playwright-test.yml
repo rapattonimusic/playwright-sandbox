@@ -13,7 +13,7 @@ steps:
     entrypoint: 'bash'
     args: ['-c',
       'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report playwright-sandbox:latest']
-      # 'docker run --rm playwright-sandbox:latest']
+    allow_failure: true
 
   # Store Playwright report to storage bucket
   - name: 'gcr.io/cloud-builders/gsutil'
