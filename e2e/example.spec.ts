@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-// test('This test will fail', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
+test('This test will fail', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
 
-//   // Expect a title "to contain" a substring.
-//   // await expect(page).toHaveTitle(/Playwright/);
-//   // Fail the test man
-//   await expect(2).toBe(3);
-// });
+  // Expect a title "to contain" a substring.
+  // await expect(page).toHaveTitle(/Playwright/);
+  // Fail the test man
+  await expect(2).toBe(3);
+});
 
 test('This test will pass!', async ({ page }) => {
   await page.goto('https://playwright.dev/');
