@@ -30,5 +30,5 @@ steps:
 
 artifacts:
   objects:
-    location: 'gs://$PROJECT_ID-playwright-reports/BUILD_$BUILD_ID/'
+    location: 'gs://playwright-reports-hosted/BUILD_$BUILD_ID/'
     paths: ['playwright-report/**']
