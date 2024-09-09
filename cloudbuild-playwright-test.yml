@@ -28,7 +28,7 @@ steps:
         echo "Playwright report is available at: https://storage.googleapis.com/playwright-reports-hosted/BUILD_$BUILD_ID/index.html"
 
 
-artifacts:
-  objects:
-    location: 'gs://playwright-reports-hosted/BUILD_$BUILD_ID/'
-    paths: ['playwright-report/**']
+# artifacts:
+#   objects:
+#     location: 'gs://playwright-reports-hosted/BUILD_$BUILD_ID/'
+#     paths: ['playwright-report/**']
