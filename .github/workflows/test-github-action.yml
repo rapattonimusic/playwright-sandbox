@@ -24,6 +24,8 @@ jobs:
 
     - name: Run Playwright tests
       run: npm run test
+      env:
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
       
     - name: Authenticate to GCP
       if: always()
@@ -32,7 +34,6 @@ jobs:
       run: |
         echo "$GCP_SERVICE_ACCOUNT_KEY" > "$HOME/gcp-key.json"
         gcloud auth activate-service-account --key-file="$HOME/gcp-key.json"
-        gcloud config set project your-gcp-project-id
 
     - name: Upload Playwright reports to GCS
       if: always()
