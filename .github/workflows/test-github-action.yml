@@ -18,11 +18,15 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+    
+    - name: Install Playwright
+      run: npx playwright install
 
     - name: Run Playwright tests
       run: npm run test
       
     - name: Authenticate to GCP
+      if: always()
       env:
         GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
       run: |
@@ -31,7 +35,8 @@ jobs:
         gcloud config set project your-gcp-project-id
 
     - name: Upload Playwright reports to GCS
-      env: 
+      if: always()
+      env:
         GITHUB_RUN_NUMBER: ${{ github.run_number }}
       run: |
         gsutil cp -r ./playwright-report gs://playwright-html-reports/gitHubActions/$GITHUB_RUN_NUMBER
