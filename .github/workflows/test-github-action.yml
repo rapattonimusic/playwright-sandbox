@@ -30,7 +30,7 @@ jobs:
       env:
         GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
       run: |
-        echo "$GCP_SERVICE_ACCOUNT_KEY" | base64 --decode > "$HOME/gcp-key.json"
+        echo "$GCP_SERVICE_ACCOUNT_KEY" > "$HOME/gcp-key.json"
         gcloud auth activate-service-account --key-file="$HOME/gcp-key.json"
         gcloud config set project your-gcp-project-id
 
