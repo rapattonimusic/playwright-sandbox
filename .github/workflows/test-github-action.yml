@@ -41,3 +41,10 @@ jobs:
         GITHUB_RUN_NUMBER: ${{ github.run_number }}
       run: |
         gsutil cp -r ./playwright-report gs://playwright-html-reports/gitHubActions/$GITHUB_RUN_NUMBER
+    
+    - name: Link to Playwright Report
+      if: always()
+      env:
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
+      run: |
+        echo "** Command + click here for the Playwright Report --> https://storage.googleapis.com/playwright-html-reports/gitHubActions/$GITHUB_RUN_NUMBER/index.html"
