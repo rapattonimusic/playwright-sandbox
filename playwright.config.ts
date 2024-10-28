@@ -20,7 +20,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['line'],['html', { open: 'never', outputFolder: process.env.CI ? '/app/playwright-report' : './playwright-report' }]],
+  reporter: [['line'],['html']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: true,
@@ -36,7 +36,9 @@ export default defineConfig({
     // },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on',
+    video: 'retain-on-failure',
+    screenshot: 'off',
+    trace: 'retain-on-failure'
     // traceDir: process.env.CI ? '/app/report' : './report',
   },
 

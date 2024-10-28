@@ -1,0 +1,37 @@
+name: Playwright Tests
+run-name: Run Playwright Tests
+on: 
+  push:
+    branches:
+      - publish-playwright-reports-to-gcp-storage-bucket
+jobs:
+  playwright-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Playwright tests
+      run: npm run test
+      
+    - name: Authenticate to GCP
+      env:
+        GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      run: |
+        echo "$GCP_SERVICE_ACCOUNT_KEY" | base64 --decode > "$HOME/gcp-key.json"
+        gcloud auth activate-service-account --key-file="$HOME/gcp-key.json"
+        gcloud config set project your-gcp-project-id
+
+    - name: Upload Playwright reports to GCS
+      env: 
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
+      run: |
+        gsutil cp -r ./playwright-report gs://playwright-html-reports/gitHubActions/$GITHUB_RUN_NUMBER
