@@ -7,6 +7,8 @@ on:
 jobs:
   playwright-tests:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -24,8 +26,6 @@ jobs:
 
     - name: Run Playwright tests
       run: npm run test
-      env:
-        GITHUB_RUN_NUMBER: ${{ github.run_number }}
       
     - name: Authenticate to GCP
       if: always()
@@ -37,14 +37,10 @@ jobs:
 
     - name: Upload Playwright reports to GCS
       if: always()
-      env:
-        GITHUB_RUN_NUMBER: ${{ github.run_number }}
       run: |
-        gsutil cp -r ./playwright-report gs://playwright-html-reports/gitHubActions/$GITHUB_RUN_NUMBER
+        gsutil cp -r ./playwright-report gs://playwright-html-reports/gitHubActions/$GITHUB_RUN_ID
     
     - name: Link to Playwright Report
       if: always()
-      env:
-        GITHUB_RUN_NUMBER: ${{ github.run_number }}
       run: |
-        echo "** Command + click here for the Playwright Report --> https://storage.googleapis.com/playwright-html-reports/gitHubActions/$GITHUB_RUN_NUMBER/index.html"
+        echo "** Command + click here for the Playwright Report --> https://storage.googleapis.com/playwright-html-reports/gitHubActions/$GITHUB_RUN_ID/index.html"
