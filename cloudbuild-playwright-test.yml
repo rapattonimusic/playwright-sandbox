@@ -36,4 +36,3 @@ steps:
     entrypoint: 'bash'
     args: ['-c',
       'gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oSubscriptions\", \"environment\": \"production\", \"buildId\": \"$BUILD_ID\", \"projectId\": \"$PROJECT_ID\"}"; test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code']
-
