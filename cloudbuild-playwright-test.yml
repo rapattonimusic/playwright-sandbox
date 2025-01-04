@@ -28,20 +28,12 @@ steps:
     entrypoint: 'bash'
     args: ['-c',
       # 'docker run --rm -v $(pwd)/playwright-report:/app/playwright-report playwright-test-image:latest']
-      'docker run --rm playwright-test-image:latest']
+      'docker run -v $(pwd)/playwright-report:/app/playwright-report playwright-test-image:latest; echo $? > /workspace/test_exit_code || true']
 
-  # Step: Publish result to the Pub/Sub topic
+  # Publish to Pub/Sub topic to update Automation Dashboard
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args:
-      - 'gcloud'
-      - 'pubsub'
-      - 'topics'
-      - 'publish'
-      - 'projects/playwright-sandbox-403213/topics/playwright-run-status'
-      - '--message'
-      - '{"repo": "oSubscriptions", "environment": "production", "buildId": "$BUILD_ID", "projectId": "$PROJECT_ID"}'
+    id: 'Publish to Pub/Sub topic to update Automation Dashboard'
+    entrypoint: 'bash'
+    args: ['-c',
+      'gcloud pubsub topics publish projects/playwright-sandbox-403213/topics/playwright-run-status --message "{\"repo\": \"oSubscriptions\", \"environment\": \"production\", \"buildId\": \"$BUILD_ID\", \"projectId\": \"$PROJECT_ID\"}"; test_exit_code=$(cat /workspace/test_exit_code); exit $test_exit_code']
 
-# artifacts:
-#   objects:
-#     location: 'gs://playwright-sandbox-reports'
-#     paths: ['playwright-report/**']
