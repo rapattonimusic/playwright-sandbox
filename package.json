@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "1.40.0"
+    "@playwright/test": "1.47.0"
   },
   "dependencies": {
-    "@google-cloud/cloudbuild": "^4.4.0"
+    "@google-cloud/cloudbuild": "^4.4.0",
+    "playwright-slack-report": "^1.1.89"
   }
 }
