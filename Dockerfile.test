@@ -1,5 +1,5 @@
 # For the playwright tests
-FROM mcr.microsoft.com/playwright:v1.40.0-focal as playwright
+FROM mcr.microsoft.com/playwright:v1.47.0-focal
 # ARGS
 ARG RUN_PLAYWRIGHT_COMMAND
 WORKDIR /app
